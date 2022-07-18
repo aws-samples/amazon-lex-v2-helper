@@ -66,3 +66,6 @@ class LexRequest:
 
     def get_slot(self, slot_name):
         return self.req['sessionState']['intent']["slots"].get(slot_name)
+
+    def get_current_intent_name(self):
+        return self.req['sessionState']['intent']['name']

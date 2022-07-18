@@ -14,22 +14,36 @@
  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 """
 
-from abc import abstractmethod
-from . import LexRequest
-from . import LexResponse
+"""
+This class is compatible with Amazon Lex V2 format.
+"""
+import logging
+
+from amazon_lex_v2_helper import LexRequest
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 
-class IntentHandler:
+class LexEventDispatcher:
 
     def __init__(self):
-        None
+        self.registered_intents = {}
 
-    @abstractmethod
-    def get_intent_name (self) -> str:
-        pass
+    def register(self, *intents):
+        for i in intents:
+            target_intent = i.get_intent_name().lower()
+            assert target_intent not in self.registered_intents,\
+                "More than one handler for same intent: {}".format(target_intent)
+            self.registered_intents[target_intent] = i
+        return self
 
-    @abstractmethod
-    def process_request (self, request: LexRequest) -> LexResponse:
-        pass
+    def dispatch(self, lex_request: dict):
+        intent_name = lex_request['sessionState']['intent']['name'].lower()
+        response = self.registered_intents[intent_name].process_request(LexRequest(lex_request))
+        logger.debug("Input request = {}".format(lex_request))
+        logger.debug("Output response = {}".format(response))
+        return response

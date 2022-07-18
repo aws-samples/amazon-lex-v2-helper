@@ -25,6 +25,7 @@ For instructions on how to set up and test this bot, as well as additional sampl
 visit the Lex Getting Started documentation http://docs.aws.amazon.com/lex/latest/dg/getting-started.html.
 """
 
+from amazon_lex_v2_helper import LexRequest
 
 def elicit_intent(session_attributes, intent_name, state, message=None):
     resp = {
@@ -110,7 +111,10 @@ def close(session_attributes, intent, context_attrs, message=None):
     return resp
 
 
-def delegate(session_attributes, intent, context_attrs, message=None):
+def delegate (req: LexRequest, message=None):
+    session_attributes = req.get_session_attrs()
+    context_attrs = {}
+    intent = req.get_current_intent_name()
     resp = {
         'sessionState': {
             'activeContexts': [{

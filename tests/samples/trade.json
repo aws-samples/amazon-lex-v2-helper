@@ -1,0 +1,114 @@
+{
+  "sessionId": "579942131336768",
+  "inputTranscript": "trade",
+  "interpretations": [
+    {
+      "intent": {
+        "slots": {
+          "ExpirationDate": "None",
+          "StrikePrice": "None",
+          "Ticker": "None"
+        },
+        "confirmationState": "None",
+        "name": "OpenFuturesIntent",
+        "state": "InProgress"
+      },
+      "nluConfidence": "1.0"
+    },
+    {
+      "intent": {
+        "slots": {
+          "OrderType": "None",
+          "Ticker": "None",
+          "Quantity": "None",
+          "ExecutionDate": "None"
+        },
+        "confirmationState": "None",
+        "name": "BuyTradeIntent",
+        "state": "InProgress"
+      },
+      "nluConfidence": "0.55"
+    },
+    {
+      "intent": {
+        "slots": {},
+        "confirmationState": "None",
+        "name": "AgentIntent",
+        "state": "InProgress"
+      },
+      "nluConfidence": "0.54"
+    },
+    {
+      "intent": {
+        "slots": {
+          "Ticker": "None",
+          "Quantity": "None",
+          "ExecutionDate": "None"
+        },
+        "confirmationState": "None",
+        "name": "SellTradeIntent",
+        "state": "InProgress"
+      },
+      "nluConfidence": "0.46"
+    },
+    {
+      "intent": {
+        "slots": {},
+        "confirmationState": "None",
+        "name": "FallbackIntent",
+        "state": "InProgress"
+      }
+    }
+  ],
+  "proposedNextState": {
+    "intent": {
+      "slots": {
+        "ExpirationDate": "None",
+        "StrikePrice": "None",
+        "Ticker": "None"
+      },
+      "confirmationState": "None",
+      "name": "OpenFuturesIntent",
+      "state": "InProgress"
+    },
+    "dialogAction": {
+      "slotToElicit": "Ticker",
+      "type": "ElicitSlot"
+    }
+  },
+  "responseContentType": "text/plain; charset=utf-8",
+  "invocationSource": "DialogCodeHook",
+  "messageVersion": "1.0",
+  "transcriptions": [
+    {
+      "resolvedContext": {
+        "intent": "OpenFuturesIntent"
+      },
+      "transcription": "trade",
+      "resolvedSlots": {},
+      "transcriptionConfidence": 1.0
+    }
+  ],
+  "sessionState": {
+    "intent": {
+      "slots": {
+        "ExpirationDate": "None",
+        "StrikePrice": "None",
+        "Ticker": "None"
+      },
+      "confirmationState": "None",
+      "name": "OpenFuturesIntent",
+      "state": "InProgress"
+    },
+    "originatingRequestId": "cd10a032-5e20-4e44-892c-17aba01e0fc8"
+  },
+  "inputMode": "Text",
+  "bot": {
+    "aliasName": "TestBotAlias",
+    "aliasId": "TSTALIASID",
+    "name": "TradeBookingBot",
+    "version": "DRAFT",
+    "localeId": "en_GB",
+    "id": "8DXWS3WV0W"
+  }
+}

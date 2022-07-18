@@ -14,36 +14,37 @@
  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 """
-
-"""
-This class is compatible with Amazon Lex V2 format.
-"""
-from . import LexRequest
-from . import IntentHandler
 
 import logging
+from abc import abstractmethod
+
+from amazon_lex_v2_helper import LexRequest
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 
-class LexEventDispatcher:
+class IntentHandler:
 
-    def __init__(self):
-        self.registered_intents = {}
+    def __init__(self, intent_name):
+        self.intent_name = intent_name
 
-    def register(self, intents: list[IntentHandler]):
-        for i in intents:
-            target_intent = i.get_intent_name().lower()
-            assert (target_intent not in self.registered_intents, "More than one handler for same intent")
-            self.registered_intents[target_intent] = i
-        return self
+    def get_intent_name(self):
+        return self.intent_name
 
-    def dispatch(self, lex_request: dict):
-        intent_name = lex_request['sessionState']['intent']['name'].lower()
-        response = self.registered_intents[intent_name].process(LexRequest(lex_request))
-        logger.debug("Input request = {}".format(lex_request))
-        logger.debug("Output response = {}".format(response))
-        return response
+    @abstractmethod
+    def process_request(self, request: LexRequest):
+        pass
+
+    def log(self):
+        return logger
+
+    def valid_intent(self, lex: LexRequest):
+        valid = False
+        slots = lex.get_session_slots()
+        if slots:
+            none_slots = [slot_name for slot_name in slots if not slots[slot_name]]
+            logger.debug("intent list = {}".format(none_slots))
+            valid = len(none_slots) == 0
+        return valid
