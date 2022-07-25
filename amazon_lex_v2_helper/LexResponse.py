@@ -24,8 +24,8 @@ It provides methods to build custom responses for Amazon Lex V2.
 For instructions on how to set up and test this bot, as well as additional samples,
 visit the Lex Getting Started documentation http://docs.aws.amazon.com/lex/latest/dg/getting-started.html.
 """
-
 from amazon_lex_v2_helper import LexRequest
+
 
 def elicit_intent(session_attributes, intent_name, state, message=None):
     resp = {
@@ -51,8 +51,7 @@ def elicit_slot(session_attributes, intent, slot_to_elicit, message=None):
             'activeContexts': [{
                 'name': 'intentContext',
                 'contextAttributes': {},
-                'timeToLive': {'timeToLiveInSeconds': 600, 'turnsToLive': 1
-                }
+                'timeToLive': {'timeToLiveInSeconds': 600, 'turnsToLive': 1}
             }],
             'sessionAttributes': session_attributes,
             'dialogAction': {
@@ -112,9 +111,9 @@ def close(session_attributes, intent, context_attrs, message=None):
 
 
 def delegate (req: LexRequest, message=None):
-    session_attributes = req.get_session_attrs()
+    session_attributes = req.get_session_attrs() or {}
     context_attrs = {}
-    intent = req.get_current_intent_name()
+    intent = req.get_current_intent()
     resp = {
         'sessionState': {
             'activeContexts': [{
@@ -126,9 +125,7 @@ def delegate (req: LexRequest, message=None):
                 }
             }],
             'sessionAttributes': session_attributes,
-            'dialogAction': {
-                'type': 'Delegate',
-            },
+            'dialogAction': {'type': 'Delegate'},
             'intent': intent
         }
     }

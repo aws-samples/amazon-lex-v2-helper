@@ -43,6 +43,8 @@ class LexEventDispatcher:
 
     def dispatch(self, lex_request: dict):
         intent_name = lex_request['sessionState']['intent']['name'].lower()
+        assert intent_name in self.registered_intents, \
+            "Unknown intent: ".format(intent_name)
         response = self.registered_intents[intent_name].process_request(LexRequest(lex_request))
         logger.debug("Input request = {}".format(lex_request))
         logger.debug("Output response = {}".format(response))

@@ -1,8 +1,7 @@
-from unittest import TestCase
-from amazon_lex_v2_helper import IntentHandler, LexRequest
-from amazon_lex_v2_helper import LexEventDispatcher
-
 import json
+from unittest import TestCase
+
+from amazon_lex_v2_helper import LexRequest
 
 
 class LexRequestTests (TestCase):
