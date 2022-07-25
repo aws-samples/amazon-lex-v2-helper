@@ -27,7 +27,7 @@ visit the Lex Getting Started documentation http://docs.aws.amazon.com/lex/lates
 from amazon_lex_v2_helper import LexRequest
 
 
-def elicit_intent(session_attributes, intent_name, state, message=None):
+def elicit_intent(req: LexRequest, intent_name, state, message=None):
     resp = {
         "sessionState": {
             'activeContexts': [{
@@ -35,7 +35,7 @@ def elicit_intent(session_attributes, intent_name, state, message=None):
                 'contextAttributes': {},
                 'timeToLive': {'timeToLiveInSeconds': 600, 'turnsToLive': 1}
             }],
-            'sessionAttributes': session_attributes,
+            'sessionAttributes': req.get_session_attrs(),
             'dialogAction': {'type': 'ElicitIntent'},
             'intent': {'name': intent_name, 'state': state},
         }
@@ -45,7 +45,7 @@ def elicit_intent(session_attributes, intent_name, state, message=None):
     return resp
 
 
-def elicit_slot(session_attributes, intent, slot_to_elicit, message=None):
+def elicit_slot(req: LexRequest, slot_to_elicit, message=None):
     resp = {
         'sessionState': {
             'activeContexts': [{
@@ -53,12 +53,12 @@ def elicit_slot(session_attributes, intent, slot_to_elicit, message=None):
                 'contextAttributes': {},
                 'timeToLive': {'timeToLiveInSeconds': 600, 'turnsToLive': 1}
             }],
-            'sessionAttributes': session_attributes,
+            'sessionAttributes': req.get_session_attrs() or {},
             'dialogAction': {
                 'type': 'ElicitSlot',
                 'slotToElicit': slot_to_elicit
             },
-            'intent': intent
+            'intent': req.get_current_intent()
         }
     }
     if message:
