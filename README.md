@@ -9,6 +9,11 @@ More specifically, it contains the following classes:
 
 Refer to the wiki section for more details!
 
+## Quick Install
+```bash
+pip3 install amazon-lex-v2-helper
+```
+
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
