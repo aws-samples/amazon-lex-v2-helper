@@ -19,19 +19,19 @@
 
 """
 This module is compatible with the Amazon Lex V2 data structure. 
-It provides methods to build custom responses for Amazon Lex V2.
+It provides methods to build custom responses returned by the Lambda function to Amazon Lex.
 
 For instructions on how to set up and test this bot, as well as additional samples,
 visit the Lex Getting Started documentation http://docs.aws.amazon.com/lex/latest/dg/getting-started.html.
 """
-from amazon_lex_v2_helper import LexRequest
+from amazon_lex_v2_helper import LexEvent
 
 
-def ask_due_to_ambiguity (req: LexRequest, intent_name, message=None):
+def ask_due_to_ambiguity (req: LexEvent, intent_name, message=None):
     return elicit_intent(req, intent_name, "In Progress", message)
 
 
-def elicit_intent(req: LexRequest, intent_name, state, message=None):
+def elicit_intent(req: LexEvent, intent_name, state, message=None):
     resp = {
         "sessionState": {
             'activeContexts': [{
@@ -49,7 +49,7 @@ def elicit_intent(req: LexRequest, intent_name, state, message=None):
     return resp
 
 
-def elicit_slot(req: LexRequest, slot_to_elicit, message=None):
+def elicit_slot(req: LexEvent, slot_to_elicit, message=None):
     resp = {
         'sessionState': {
             'activeContexts': [{
@@ -114,7 +114,7 @@ def close(session_attributes, intent, context_attrs, message=None):
     return resp
 
 
-def delegate (req: LexRequest, message=None):
+def delegate (req: LexEvent, message=None):
     session_attributes = req.get_session_attrs() or {}
     context_attrs = {}
     intent = req.get_current_intent()

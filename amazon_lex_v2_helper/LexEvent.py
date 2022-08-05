@@ -24,7 +24,7 @@ and to modify attributes by means of setters.
 """
 
 
-class LexRequest:
+class LexEvent:
 
     def __init__(self, request):
         self.req = request

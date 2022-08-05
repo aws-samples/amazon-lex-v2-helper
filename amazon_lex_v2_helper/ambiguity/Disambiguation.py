@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-from amazon_lex_v2_helper import LexRequest
+from amazon_lex_v2_helper import LexEvent
 
 import logging
 
@@ -16,7 +16,7 @@ class Disambiguation:
     def __init__(self, ambiguity_limit=AMBIGUITY_LIMIT):
         self.ambiguity_limit = ambiguity_limit
 
-    def check_ambiguity_limit (self, req: LexRequest) -> dict:
+    def check_ambiguity_limit (self, req: LexEvent) -> dict:
         """
         Checks ambiguity, and returns ambiguity details if diff is greater than AMBI
         :param req: Lex request

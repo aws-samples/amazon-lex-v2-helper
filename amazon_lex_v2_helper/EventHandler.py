@@ -19,14 +19,18 @@
 import logging
 from abc import abstractmethod
 
-from amazon_lex_v2_helper import LexRequest
+from amazon_lex_v2_helper import LexEvent
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 
-class IntentHandler:
-
+class EventHandler:
+    """
+    Handles a Lex event received by the dispatcher.
+    Each event handler is subscribed to the dispatcher by intent name, so only one handler is allowed for each
+    of the intents defined in the Lex bot.
+    """
     def __init__(self, intent_name):
         self.intent_name = intent_name
 
@@ -34,13 +38,13 @@ class IntentHandler:
         return self.intent_name
 
     @abstractmethod
-    def process_request(self, request: LexRequest):
+    def process_request(self, request: LexEvent):
         pass
 
     def log(self):
         return logger
 
-    def valid_intent(self, lex: LexRequest):
+    def valid_intent(self, lex: LexEvent):
         valid = False
         slots = lex.get_session_slots()
         if slots:
