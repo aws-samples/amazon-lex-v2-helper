@@ -74,6 +74,9 @@ class LexEvent:
     def get_current_intent(self):
         return self.req['sessionState']['intent']
 
+    def get_current_intent_name(self) -> str:
+        return self.req['sessionState']['intent'].get('name')
+
     def slot_exists(self, slot_name):
         return self.get_slot(slot_name) is not None
 

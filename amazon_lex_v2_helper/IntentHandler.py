@@ -25,10 +25,10 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 
-class EventHandler:
+class IntentHandler:
     """
     Handles a Lex event received by the dispatcher.
-    Each event handler is subscribed to the dispatcher by intent name, so only one handler is allowed for each
+    Each intent handler is subscribed to the dispatcher by intent name, so only one handler is allowed for each
     of the intents defined in the Lex bot.
     """
     def __init__(self, intent_name):

@@ -5,7 +5,7 @@ More specifically, it contains the following classes:
 * LexEvent: class to parse Amazon Lex requests
 * LexResponse: builder class to create Amazon Lex responses
 * LexEventDispatcher: utility class to define your intent handlers
-* EventHandler: class providing basic intent functionality
+* IntentHandler: class providing basic intent functionality
 
 Refer to the wiki section for more details!
 

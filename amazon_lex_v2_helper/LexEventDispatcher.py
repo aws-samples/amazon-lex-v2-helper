@@ -24,6 +24,8 @@ import logging
 
 from amazon_lex_v2_helper import LexEvent
 from amazon_lex_v2_helper import Disambiguation
+from amazon_lex_v2_helper import LexResponse
+
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
@@ -46,14 +48,18 @@ class LexEventDispatcher:
         self.ambiguity_handler = ambiguity_handler
         return self
 
-    def dispatch(self, lex_request: dict):
+    def dispatch(self, lex_request: dict) -> LexResponse:
         logger.debug("Input request = {}".format(lex_request))
+        event = LexEvent(lex_request)
         if self.ambiguity_handler:
-            ambiguity = self.ambiguity_handler.check_ambiguity_limit(lex_request)
+            ambiguity = self.ambiguity_handler.check_ambiguity_limit(event)
             if ambiguity:
                 return self.ambiguity_handler.handle_ambiguity (ambiguity["i1"], ambiguity["i2"], ambiguity["amb"])
-        intent_name = lex_request['sessionState']['intent']['name'].lower()
-        assert intent_name in self.subscribers, "Unknown intent: ".format(intent_name)
-        response = self.subscribers[intent_name].process_request(LexEvent(lex_request))
+        intent_name = event.get_current_intent_name().lower()
+        if not intent_name in self.subscribers:
+            logger.debug("Warning: no observer defined for intent {}".format(intent_name))
+            response = LexResponse.delegate(event)
+        else:
+            response = self.subscribers[intent_name].process_request(event)
         logger.debug("Output response = {}".format(response))
         return response
