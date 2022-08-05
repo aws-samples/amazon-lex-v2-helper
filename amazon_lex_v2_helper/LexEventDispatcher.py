@@ -23,7 +23,7 @@ This class is compatible with Amazon Lex V2 format.
 import logging
 
 from amazon_lex_v2_helper import LexRequest
-
+from amazon_lex_v2_helper import Disambiguation
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
@@ -32,6 +32,7 @@ class LexEventDispatcher:
 
     def __init__(self):
         self.registered_intents = {}
+        self.ambiguity_handler: Disambiguation = None
 
     def register(self, *intents):
         for i in intents:
@@ -41,11 +42,18 @@ class LexEventDispatcher:
             self.registered_intents[target_intent] = i
         return self
 
+    def set_ambiguity_handler (self, ambiguity_handler: Disambiguation):
+        self.ambiguity_handler = ambiguity_handler
+        return self
+
     def dispatch(self, lex_request: dict):
         logger.debug("Input request = {}".format(lex_request))
+        if self.ambiguity_handler:
+            ambiguity = self.ambiguity_handler.check_ambiguity_limit(lex_request)
+            if ambiguity:
+                return self.ambiguity_handler.handle_ambiguity (self, ambiguity[0], ambiguity[1], ambiguity[2])
         intent_name = lex_request['sessionState']['intent']['name'].lower()
-        assert intent_name in self.registered_intents, \
-            "Unknown intent: ".format(intent_name)
+        assert intent_name in self.registered_intents, "Unknown intent: ".format(intent_name)
         response = self.registered_intents[intent_name].process_request(LexRequest(lex_request))
         logger.debug("Output response = {}".format(response))
         return response

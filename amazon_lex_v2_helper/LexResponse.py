@@ -27,6 +27,10 @@ visit the Lex Getting Started documentation http://docs.aws.amazon.com/lex/lates
 from amazon_lex_v2_helper import LexRequest
 
 
+def ask_due_to_ambiguity (req: LexRequest, intent_name, message=None):
+    return elicit_intent(req, intent_name, "In Progress", message)
+
+
 def elicit_intent(req: LexRequest, intent_name, state, message=None):
     resp = {
         "sessionState": {

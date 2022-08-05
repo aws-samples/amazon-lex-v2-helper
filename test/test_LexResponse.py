@@ -1,16 +1,17 @@
 from unittest import TestCase
-from amazon_lex_v2_helper import IntentHandler, LexRequest, LexResponse
-from amazon_lex_v2_helper import LexEventDispatcher
-
+from amazon_lex_v2_helper import LexRequest, LexResponse
+import pkg_resources
 import json
+
 
 
 class LexResponseTests (TestCase):
 
     def test_delegate_returns_not_null (self):
-        with open("samples/trade.json") as json_file:
+        path = 'samples/trade.json'
+        full_path = pkg_resources.resource_filename(__name__, path)
+        with open(full_path) as json_file:
             json_data = json.load(json_file)
             req = LexRequest(json_data)
             resp = LexResponse.delegate(req)
-            print(resp)
             self.assertIsNotNone(resp)
