@@ -56,8 +56,8 @@ class LexEventDispatcher:
             if ambiguity:
                 return self.ambiguity_handler.handle_ambiguity (ambiguity["i1"], ambiguity["i2"], ambiguity["amb"])
         intent_name = event.get_current_intent_name().lower()
-        if not intent_name in self.subscribers:
-            logger.debug("Warning: no observer defined for intent {}".format(intent_name))
+        if intent_name not in self.subscribers:
+            logger.debug("Warning: no observer defined for intent {}, using default behaviour".format(intent_name))
             response = LexResponse.delegate(event)
         else:
             response = self.subscribers[intent_name].process_request(event)
