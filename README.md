@@ -13,7 +13,7 @@ pip3 install amazon-lex-v2-helper
 ```
 
 ## Example
-*LexEventDispatcher* class provides an observer approach to subscribe intent handlers without having to write the function as in the [examples](https://docs.aws.amazon.com/lex/latest/dg/ex-book-trip-create-lambda-function.html):
+*LexEventDispatcher* class provides an [observer](https://refactoring.guru/design-patterns/observer/python/example#:~:text=Observer%20is%20a%20behavioral%20design,that%20implements%20a%20subscriber%20interface.) approach to register intent handlers which scales better and is more modular than just a simple loop, as in the [examples](https://docs.aws.amazon.com/lex/latest/dg/ex-book-trip-create-lambda-function.html):
 ```python
 from amazon_lex_v2_helper import LexEventDispatcher
 
