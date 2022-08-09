@@ -22,9 +22,9 @@ This class is compatible with Amazon Lex V2 format.
 """
 import logging
 
-from amazon_lex_v2_helper import LexEvent
-from amazon_lex_v2_helper import Disambiguation
-from amazon_lex_v2_helper import LexResponse
+from amazon_lex_helper import LexEvent
+from amazon_lex_helper import Disambiguation
+from amazon_lex_helper import LexResponse
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)

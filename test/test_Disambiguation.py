@@ -2,8 +2,8 @@ import json
 import unittest
 import pkg_resources
 
-from amazon_lex_v2_helper import LexEvent
-from amazon_lex_v2_helper import Disambiguation
+from amazon_lex_helper import LexEvent
+from amazon_lex_helper import Disambiguation
 
 
 class DisambiguationTests(unittest.TestCase):

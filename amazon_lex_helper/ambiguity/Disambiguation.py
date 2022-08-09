@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-from amazon_lex_v2_helper import LexEvent
+from amazon_lex_helper import LexEvent
 
 import logging
 

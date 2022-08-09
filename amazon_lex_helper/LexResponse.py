@@ -24,7 +24,7 @@ It provides methods to build custom responses returned by the Lambda function to
 For instructions on how to set up and test this bot, as well as additional samples,
 visit the Lex Getting Started documentation http://docs.aws.amazon.com/lex/latest/dg/getting-started.html.
 """
-from amazon_lex_v2_helper import LexEvent
+from amazon_lex_helper import LexEvent
 
 
 def ask_due_to_ambiguity (req: LexEvent, intent_name, message=None):

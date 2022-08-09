@@ -1,10 +1,10 @@
 import pkg_resources
 import json
 from unittest import TestCase
-from amazon_lex_v2_helper import IntentHandler
-from amazon_lex_v2_helper import LexEventDispatcher
-from amazon_lex_v2_helper import Disambiguation
-from amazon_lex_v2_helper import LexEvent
+from amazon_lex_helper import IntentHandler
+from amazon_lex_helper import LexEventDispatcher
+from amazon_lex_helper import Disambiguation
+from amazon_lex_helper import LexEvent
 
 class LexEventDispatcherTests (TestCase):
 

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from amazon_lex_v2_helper import LexEvent, LexResponse
+from amazon_lex_helper import LexEvent, LexResponse
 import pkg_resources
 import json
 
