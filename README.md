@@ -1,7 +1,7 @@
 ## amazon-lex-v2-helper
 
-This repository contains a list of helper classes to handle Amazon Lex v2 responses and create requests.
-More specifically, it contains the following classes:
+This repository contains a list of helper classes to handle Amazon Lex v2 responses and create custom requests.
+More specifically, it provides the following functionality:
 * LexEvent: parses Amazon Lex events
 * LexResponse: builder to create Amazon Lex responses
 * LexEventDispatcher: utility class to define your intent handlers
