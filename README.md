@@ -8,7 +8,7 @@ More specifically, it contains the following classes:
 * IntentHandler: class providing basic intent functionality
 
 ## Quick Install
-```bash
+```python
 pip3 install amazon-lex-v2-helper
 ```
 
