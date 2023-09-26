@@ -29,6 +29,12 @@ class LexEvent:
     def __init__(self, request):
         self.req = request
 
+    def get_intent_name(self) -> str:
+        return self.req['sessionState']['intent'].get('name')
+
+    def get_intent(self):
+        return self.req['sessionState']['intent']
+
     def is_input_user_request(self):
         return self.req.get("invocationSource") == "DialogCodeHook"
 
@@ -55,10 +61,6 @@ class LexEvent:
             satts = self.req["sessionState"].get("sessionAttributes")
         return satts
 
-    def get_current_intent_slot (self, slot_name):
-        current_intent_slots = self.req['currentIntent']['slots']
-        return current_intent_slots.get(slot_name)
-
     def get_interpretations(self):
         return self.req.get("interpretations")
 
@@ -68,19 +70,13 @@ class LexEvent:
     def is_confirmed(self):
         return self.get_confirmation_state() == "Confirmed"
 
-    def get_slot(self, slot_name):
-        return self.req['sessionState']['intent']["slots"].get(slot_name)
-
-    def get_current_intent(self):
-        return self.req['sessionState']['intent']
-
-    def get_current_intent_name(self) -> str:
-        return self.req['sessionState']['intent'].get('name')
-
     def slot_exists(self, slot_name):
         return self.get_slot(slot_name) is not None
 
-    def get_interpreted_value (self, slot_name):
+    def get_slot(self, slot_name):
+        return self.req['sessionState']['intent']["slots"].get(slot_name)
+
+    def get_slot_interpreted_value (self, slot_name):
         slot = self.get_slot(slot_name)
         if slot:
             return slot['value'].get('interpretedValue')

@@ -13,7 +13,7 @@ class LexRequestTests (TestCase):
         with open(full_path) as json_file:
             json_data = json.load(json_file)
             req = LexEvent(json_data)
-            self.assertEqual(req.get_current_intent()['name'], "OpenFuturesIntent")
+            self.assertEqual(req.get_intent_name(), "OpenFuturesIntent")
             self.assertEqual(req.get_input_transcript(), "trade")
 
     def test_increase_retry(self):

@@ -62,9 +62,10 @@ def elicit_slot(req: LexEvent, slot_to_elicit, message=None):
                 'type': 'ElicitSlot',
                 'slotToElicit': slot_to_elicit
             },
-            'intent': req.get_current_intent()
+            'intent': req.get_intent()
         }
     }
+    resp['sessionState']['intent']['slots'][slot_to_elicit] = None # clear any existing slot value
     if message:
         resp['messages'] = [{'contentType': 'PlainText', 'content': message}]
     return resp
@@ -114,10 +115,15 @@ def close(session_attributes, intent, context_attrs, message=None):
     return resp
 
 
-def delegate (req: LexEvent, message=None):
+def delegate (req: LexEvent, slot_to_override=None, slot_value_to_override=None, message=None):
+    """
+    Returns the handling of the intent to Amazon Lex.
+    It is possible to set the value of a specific slot at the same time to implement logics like
+    'if slot s1 = X, then s2 = Y'.
+    """
     session_attributes = req.get_session_attrs() or {}
     context_attrs = {}
-    intent = req.get_current_intent()
+    intent = req.get_intent()
     resp = {
         'sessionState': {
             'activeContexts': [{
@@ -133,6 +139,9 @@ def delegate (req: LexEvent, message=None):
             'intent': intent
         }
     }
+    if slot_to_override:
+        resp['sessionState']['intent']['slots'][slot_to_override] = \
+        {'shape': 'Scalar', 'value': {'originalValue': slot_value_to_override, 'resolvedValues': [slot_value_to_override], 'interpretedValue': slot_value_to_override}} # clear any existing slot value
     if message:
         resp['messages'] = [{'contentType': 'PlainText', 'content': message}]
     return resp

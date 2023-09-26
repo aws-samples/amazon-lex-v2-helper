@@ -7,7 +7,7 @@ def read(fname):
 setup(
     name="amazon-lex-helper",
     packages=['amazon-lex-helper'],
-    version="0.1",
+    version="1.0",
     author="rubenafo",
     author_email='rubenafo@amazon.com',
     description="Interact with Amazon Lex using Python in an easy way",

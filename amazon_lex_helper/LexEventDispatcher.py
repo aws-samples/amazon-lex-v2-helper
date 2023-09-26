@@ -22,8 +22,7 @@ This class is compatible with Amazon Lex V2 format.
 """
 import logging
 
-from amazon_lex_helper import LexEvent
-from amazon_lex_helper import Disambiguation
+from amazon_lex_helper import LexEvent, Disambiguation
 from amazon_lex_helper import LexResponse
 
 logger = logging.getLogger()
@@ -55,9 +54,9 @@ class LexEventDispatcher:
             ambiguity = self.ambiguity_handler.check_ambiguity_limit(event)
             if ambiguity:
                 return self.ambiguity_handler.handle_ambiguity (ambiguity["i1"], ambiguity["i2"], ambiguity["amb"])
-        intent_name = event.get_current_intent_name().lower()
+        intent_name = event.get_intent_name().lower()
         if intent_name not in self.subscribers:
-            logger.debug("Warning: no observer defined for intent {}, using default behaviour".format(intent_name))
+            logger.debug("Warning: no observer defined for intent '{}', using default behaviour".format(intent_name))
             response = LexResponse.delegate(event)
         else:
             response = self.subscribers[intent_name].process_request(event)
