@@ -53,8 +53,8 @@ class BookHotelIntent (IntentHandler):
 
 ## AWS Lambda usage
 
-You can clone this repo and execute ./create_layer.sh script, which will create a .zip file under /layer folder.  
-That zip can be used to create a layer and then added to your [AWS Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/adding-layers.html) 
+You can clone this repo and execute ./create_layer.sh script, which will create a .zip file inside /layer folder.  
+That zip can be then used to create a layer for your [AWS Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/adding-layers.html).
 
 
 ## Security
