@@ -51,6 +51,12 @@ class BookHotelIntent (IntentHandler):
         return LexResponse.delegate(req)
 ```
 
+## AWS Lambda usage
+
+You can clone this repo and execute ./create_layer.sh script, which will create a .zip file under /layer folder.  
+That zip can be used to create a layer and then added to your [AWS Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/adding-layers.html) 
+
+
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
