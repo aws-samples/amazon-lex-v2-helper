@@ -24,10 +24,24 @@ import logging
 
 from amazon_lex_helper import LexEvent, Disambiguation
 from amazon_lex_helper import LexResponse
+from os import getenv
 
 logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
 
+def get_log_level():
+    """
+    Get the logging level from the LOG_LEVEL environment variable if it is valid.
+    Otherwise set to WARNING
+    :return: The logging level to use
+    """
+    DEFAULT_LEVEL = "WARNING"
+    valid_levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+    requested_level = getenv("LOG_LEVEL", DEFAULT_LEVEL)
+    if requested_level and requested_level in valid_levels:
+        return requested_level
+    return DEFAULT_LEVEL
+
+logger.setLevel(get_log_level())
 
 class LexEventDispatcher:
 
