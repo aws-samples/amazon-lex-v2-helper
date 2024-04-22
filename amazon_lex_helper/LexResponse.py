@@ -147,18 +147,24 @@ def delegate (req: LexEvent, slot_to_override=None, slot_value_to_override=None,
     return resp
 
 
-def initial_message(intent_name):
-    slot_to_elicit = 'Location' if intent_name == 'BookHotel' else 'PickUpCity'
-    return {
-        'sessionState': {
-            'dialogAction': {
-                'type': 'ElicitSlot',
-                'slotToElicit': slot_to_elicit
+def initial_message(intent_name, welcome_message):
+    """
+    Provide Initial Message for Start of Flow
+    """
+    return  {
+        "sessionState": {
+            "dialogAction": {
+            "type": "Close",
             },
-            'intent': {
-                'confirmationState': 'None',
-                'name': intent_name,
-                'state': 'InProgress'
-            }
+        "intent": {
+            "name": intent_name,
+            "state": "Fulfilled"
         }
+    },
+    "messages": [
+            {
+            "contentType": "PlainText",
+            "content": welcome_message
+            }
+        ]
     }
