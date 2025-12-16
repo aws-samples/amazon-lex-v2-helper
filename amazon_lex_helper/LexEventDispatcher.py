@@ -64,15 +64,24 @@ class LexEventDispatcher:
     def dispatch(self, lex_request: dict) -> LexResponse:
         logger.debug("Input request = {}".format(lex_request))
         event = LexEvent(lex_request)
+        
+        # Check for ambiguity if handler is set
         if self.ambiguity_handler:
             ambiguity = self.ambiguity_handler.check_ambiguity_limit(event)
             if ambiguity:
                 return self.ambiguity_handler.handle_ambiguity (ambiguity["i1"], ambiguity["i2"], ambiguity["amb"])
+        
         intent_name = event.get_intent_name().lower()
         if intent_name not in self.subscribers:
             logger.debug("Warning: no observer defined for intent '{}', using default behaviour".format(intent_name))
             response = LexResponse.delegate(event)
         else:
-            response = self.subscribers[intent_name].process_request(event)
+            handler = self.subscribers[intent_name]
+            # Use enhanced processing if available, otherwise fall back to original method
+            if hasattr(handler, 'process_request_with_hooks'):
+                response = handler.process_request_with_hooks(event)
+            else:
+                response = handler.process_request(event)
+        
         logger.debug("Output response = {}".format(response))
         return response
